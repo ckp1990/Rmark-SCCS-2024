@@ -1,0 +1,60 @@
+---
+title: "Introduction to R Markdown"
+author: "Chandan Kumar Pandey"
+date: "`r Sys.Date()`"
+output: 
+  xaringan::moon_reader:
+  lib_dir: libs
+nature:
+  highlightStyle: github
+countIncrementalSlides: false
+slideNumber: true
+---
+  
+  # Slide 1: What is R Markdown?
+  
+  - **R Markdown** is a framework for **reproducible reporting**.
+- It allows you to combine:
+  - Text and formatted documentation (Markdown).
+- Code and analysis (R or other languages).
+- Visualizations (plots, tables).
+
+---
+  
+  # Slide 2: Why Use R Markdown?
+  
+  - Supports **reproducibility** by embedding code and results.
+- Flexible output formats:
+  - HTML, PDF, Word, and more.
+- Works with various languages beyond R (Python, SQL).
+
+---
+  
+  # Slide 3: Key Components of R Markdown
+  
+  1. **YAML Header**: Metadata about the document.
+2. **Markdown Syntax**: Format text, headings, lists, etc.
+3. **Code Chunks**: Embed R code with `{r}` blocks.
+4. **Knit Button**: Generate final output in desired format.
+
+---
+  
+  # Slide 4: YAML Header Example
+  
+  ```yaml
+---
+  title: "My Report"
+author: "Your Name"
+date: "`r Sys.Date()`"
+output: pdf_document
+```
+---
+
+
+  # Slide 5: For more please refer to following cheat sheet and resource: 
+  
+  [Rmarkdown webpage.](https://rmarkdown.rstudio.com/lesson-1.html) 
+  
+  
+
+  
