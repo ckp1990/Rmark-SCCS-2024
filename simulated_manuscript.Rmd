@@ -1,0 +1,149 @@
+---
+title: 'A Simulated Manuscript: The Impact of Exercise on Reaction Times'
+author: "Your Name"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+# Abstract
+
+This simulated study investigates the effect of a basic physical exercise on reaction times. Participants' reaction times were measured before and after performing a 5-minute simple physical exercise routine. Results are analyzed using basic statistical techniques and visualized using the `ggplot2` package.
+
+------------------------------------------------------------------------
+
+# 1. Introduction
+
+Physical exercise is often associated with improved cognitive function and faster reaction times. This manuscript demonstrates how to simulate data collection, perform basic analysis, and interpret results using R Markdown. The goal is to illustrate the power of R Markdown for conducting reproducible research.
+
+------------------------------------------------------------------------
+
+# 2. Methods
+
+## 2.1 Participants
+
+The simulated data consists of **30 participants**. Each participant's reaction time was measured twice: - **Before exercise** - **After exercise**
+
+## 2.2 Data Simulation
+
+In this section, we generate **random data** for the study.
+
+```{r, include=TRUE}
+# Load required packages
+library(dplyr)
+
+# Set random seed for reproducibility
+set.seed(123)
+
+# Simulate data for 30 participants
+n <- 30
+reaction_data <- data.frame(
+  participant = 1:n,
+  before_exercise = rnorm(n, mean = 300, sd = 50),  # Reaction time before (ms)
+  after_exercise = rnorm(n, mean = 290, sd = 50)    # Reaction time after (ms)
+)
+
+# Preview the data
+head(reaction_data)
+```
+
+------------------------------------------------------------------------
+
+# 3. Results
+
+## 3.1 Descriptive Statistics
+
+Below are the **mean reaction times** before and after exercise.
+
+```{r, include=TRUE}
+# Calculate mean reaction times
+mean_before <- mean(reaction_data$before_exercise)
+mean_after <- mean(reaction_data$after_exercise)
+
+# Display results
+data.frame(
+  Condition = c("Before Exercise", "After Exercise"),
+  Mean_Reaction_Time = c(mean_before, mean_after)
+)
+```
+
+## 3.2 Visualization
+
+The following plot shows the distribution of reaction times before and after exercise.
+
+```{r, echo=FALSE, fig.width=6, fig.height=4}
+library(ggplot2)
+
+# Convert data to long format for ggplot
+reaction_long <- reaction_data %>%
+  tidyr::pivot_longer(
+    cols = c(before_exercise, after_exercise),
+    names_to = "Condition",
+    values_to = "ReactionTime"
+  )
+
+# Plot the reaction times
+ggplot(reaction_long, aes(x = Condition, y = ReactionTime, fill = Condition)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(title = "Reaction Times Before and After Exercise",
+       y = "Reaction Time (ms)")
+```
+
+------------------------------------------------------------------------
+
+## 3.3 Hypothesis Testing
+
+A **paired t-test** is used to determine whether exercise significantly improved reaction times.
+
+```{r, include=TRUE}
+# Perform paired t-test
+t_test_result <- t.test(
+  reaction_data$before_exercise, 
+  reaction_data$after_exercise, 
+  paired = TRUE
+)
+
+# Display the test results
+t_test_result
+```
+
+------------------------------------------------------------------------
+
+# 4. Discussion
+
+The results of this simulated study suggest that physical exercise may have a small but measurable effect on reaction times. Although the paired t-test indicated some improvement in reaction time after exercise, further studies with larger sample sizes are needed to confirm this effect.
+
+------------------------------------------------------------------------
+
+# 5. Conclusion
+
+This manuscript demonstrates how to generate random data, analyze it, and present results in a clear and reproducible manner using R Markdown. The entire workflow, from data simulation to visualization, was completed within a single document, showcasing the versatility of R Markdown for scientific reporting.
+
+------------------------------------------------------------------------
+
+# 6. References
+
+-   Wickham, H. (2016). *ggplot2: Elegant Graphics for Data Analysis*. Springer-Verlag.
+-   Xie, Y. (2015). *Dynamic Documents with R and knitr*. CRC Press.
+
+------------------------------------------------------------------------
+
+# Appendix: Exercise
+
+Try the following tasks to extend the manuscript:
+
+1.  **Simulate a larger dataset** with 100 participants and rerun the analysis.
+2.  **Change the mean reaction times** (e.g., set mean to 310 before exercise) and observe the impact on results.
+3.  **Add a new plot** that shows the density distribution of reaction times.
+
+```{r, echo=FALSE}
+# Example density plot
+ggplot(reaction_long, aes(x = ReactionTime, fill = Condition)) +
+  geom_density(alpha = 0.5) +
+  theme_minimal() +
+  labs(title = "Density Plot of Reaction Times",
+       x = "Reaction Time (ms)")
+```
